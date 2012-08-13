@@ -26,7 +26,8 @@ describe('routerules parser tests', function() {
 	});
 
 	it('should be able to add definitions after calling the original parse', function() {
-		var ruleset = routerules('GET /hello => simple.hello', opts).add('/hello => simple.hello');
+		var ruleset = routerules('GET /hello => simple.hello', opts)
+						.add('/hello => simple.hello');
 
 		assert.equal(ruleset.rules.length, 2);
 
