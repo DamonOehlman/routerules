@@ -12,7 +12,8 @@
     "debug": "*"
   },
   "devDependencies": {
-    "mocha": "1.2.x"
+    "mocha": "1.2.x",
+    "tako": "0.3.x"
   },
   "repository": {
     "type": "git",
