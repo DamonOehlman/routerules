@@ -1,7 +1,6 @@
 var fs = require('fs'),
 	path = require('path'),
-	Ruleset = require('./lib/ruleset'),
-	reRoute = /([A-Z]+)?\s?([^\s]*)\s*=\>\s*(.*)/;
+	Ruleset = require('./lib/ruleset');
 
 /**
 # routerules
@@ -9,23 +8,11 @@ var fs = require('fs'),
 Read the specified input lines, and return a RouteRules object if successful
 */
 function routerules(lines, opts) {
-	var ruleset;
-
-	// ensure we have opts and callback
-	opts = opts || {};
-
-	// create the rulelist
-	ruleset = new Ruleset(opts);
+	var ruleset = new Ruleset(opts);
 
 	// iterate through the lines and create the rules list
 	[].concat(lines || []).forEach(function(line) {
-		var result = reRoute.exec(line);
-
-		// if this was a valid route result, then create a new rule
-		if (result) {
-			// create 
-			ruleset.add(result[1] || 'GET', result[2], result[3]);
-		}
+		ruleset.add(line);
 	});
 
 	return ruleset;
