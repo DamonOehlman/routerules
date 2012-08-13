@@ -9,7 +9,8 @@ var fs = require('fs'),
 Read the specified input lines, and return a RouteRules object if successful
 */
 function routerules(lines, opts, callback) {
-	var ruleset;
+	var ruleset,
+		err;
 
 	// handle the 2 arguments case
 	if (typeof opts == 'function') {
@@ -24,19 +25,25 @@ function routerules(lines, opts, callback) {
 	// create the rulelist
 	ruleset = new Ruleset(opts);
 
-	// iterate through the lines and create the rules list
-	(lines || []).forEach(function(line) {
-		var result = reRoute.exec(line);
+	// load the rules, and handle exceptions
+	try {
+		// iterate through the lines and create the rules list
+		(lines || []).forEach(function(line) {
+			var result = reRoute.exec(line);
 
-		// if this was a valid route result, then create a new rule
-		if (result) {
-			// create 
-			ruleset.add(result[1] || 'GET', result[2], result[3]);
-		}
-	});
+			// if this was a valid route result, then create a new rule
+			if (result) {
+				// create 
+				ruleset.add(result[1] || 'GET', result[2], result[3]);
+			}
+		});
+	}
+	catch (e) {
+		err = e;
+	}
 
 	// execute the callback
-	callback(null, ruleset);
+	callback(err, ruleset);
 }
 
 /**
