@@ -8,42 +8,27 @@ var fs = require('fs'),
 
 Read the specified input lines, and return a RouteRules object if successful
 */
-function routerules(lines, opts, callback) {
-	var ruleset,
-		err;
-
-	// handle the 2 arguments case
-	if (typeof opts == 'function') {
-		callback = opts;
-		opts = {};
-	}
+function routerules(lines, opts) {
+	var ruleset;
 
 	// ensure we have opts and callback
 	opts = opts || {};
-	callback = callback || function() {};
 
 	// create the rulelist
 	ruleset = new Ruleset(opts);
 
-	// load the rules, and handle exceptions
-	try {
-		// iterate through the lines and create the rules list
-		(lines || []).forEach(function(line) {
-			var result = reRoute.exec(line);
+	// iterate through the lines and create the rules list
+	[].concat(lines || []).forEach(function(line) {
+		var result = reRoute.exec(line);
 
-			// if this was a valid route result, then create a new rule
-			if (result) {
-				// create 
-				ruleset.add(result[1] || 'GET', result[2], result[3]);
-			}
-		});
-	}
-	catch (e) {
-		err = e;
-	}
+		// if this was a valid route result, then create a new rule
+		if (result) {
+			// create 
+			ruleset.add(result[1] || 'GET', result[2], result[3]);
+		}
+	});
 
-	// execute the callback
-	callback(err, ruleset);
+	return ruleset;
 }
 
 /**
@@ -52,7 +37,9 @@ function routerules(lines, opts, callback) {
 Load the specified text file, split on newline characters load into route rules
 */
 routerules.load = function(targetFile, opts, callback) {
-	// handle the 2 arguments case
+	var err;
+
+	// handle the 2 argument case
 	if (typeof opts == 'function') {
 		callback = opts;
 		opts = {};
@@ -60,7 +47,6 @@ routerules.load = function(targetFile, opts, callback) {
 
 	// ensure we have opts and callback
 	opts = opts || {};
-	callback = callback || function() {};
 
 	// read the specified target file, and parse the results onto the main routerules fn
 	fs.readFile(targetFile, opts.encoding || 'utf8', function(err, data) {
@@ -70,8 +56,23 @@ routerules.load = function(targetFile, opts, callback) {
 		opts.basePath = opts.basePath || path.dirname(targetFile);
 
 		// initialise the routerules
-		routerules(data.split(/\n\r?/), opts, callback);
+		try {
+			var ruleset = routerules(data.split(/\n\r?/), opts);
+		}
+		catch (e) {
+			err = e;
+		}
+
+		// if we have a callback, then trigger it
+		if (typeof callback == 'function') {
+			callback(err, ruleset);
+		}
 	});
+};
+
+_parse = routerules.parse = function(line, ruleset) {
+
+	return ruleset;
 };
 
 module.exports = routerules;
