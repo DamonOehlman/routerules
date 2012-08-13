@@ -1,0 +1,27 @@
+{
+  "name": "routerules",
+  "description": "Web Framework Agnostic Textual URL Route Definition",
+  "author": "Damon Oehlman <damon.oehlman@sidelab.com>",
+  "tags": [
+    "url",
+    "router"
+  ],
+  "version": "0.0.0",
+  "main": "index.js",
+  "dependencies": {
+  },
+  "devDependencies": {
+    "mocha": "1.2.x"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/DamonOehlman/routerules.git"
+  },
+  "bugs": {
+    "url": "http://github.com/DamonOehlman/routerules/issues"
+  },
+  "scripts": {
+    "test": "./node_modules/mocha/bin/mocha --reporter spec"
+  },
+  "contributors": []
+}
