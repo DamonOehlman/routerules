@@ -1,5 +1,5 @@
 # Send GET requests for /hello to handlers/test.js (hello export)
-GET /hello => test.hello
+GET /hello => simple.hello
 
 # Send GET requests for /hello2 to handlers/test.js (hello export)
-/hello => test.hello
+/hello => simple.hello

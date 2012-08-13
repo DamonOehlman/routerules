@@ -1,6 +1,6 @@
 var fs = require('fs'),
 	path = require('path'),
-	RuleList = require('./lib/rulelist'),
+	Ruleset = require('./lib/ruleset'),
 	reRoute = /([A-Z]+)?\s?([^\s]*)\s*=\>\s*(.*)/;
 
 /**
@@ -9,7 +9,7 @@ var fs = require('fs'),
 Read the specified input lines, and return a RouteRules object if successful
 */
 function routerules(lines, opts, callback) {
-	var rules = new RuleList();
+	var ruleset;
 
 	// handle the 2 arguments case
 	if (typeof opts == 'function') {
@@ -21,6 +21,9 @@ function routerules(lines, opts, callback) {
 	opts = opts || {};
 	callback = callback || function() {};
 
+	// create the rulelist
+	ruleset = new Ruleset(opts);
+
 	// iterate through the lines and create the rules list
 	(lines || []).forEach(function(line) {
 		var result = reRoute.exec(line);
@@ -28,12 +31,12 @@ function routerules(lines, opts, callback) {
 		// if this was a valid route result, then create a new rule
 		if (result) {
 			// create 
-			rules.add(result[1] || 'GET', result[2], result[3]);
+			ruleset.add(result[1] || 'GET', result[2], result[3]);
 		}
 	});
 
 	// execute the callback
-	callback(null, null);
+	callback(null, ruleset);
 }
 
 /**
@@ -56,6 +59,10 @@ routerules.load = function(targetFile, opts, callback) {
 	fs.readFile(targetFile, opts.encoding || 'utf8', function(err, data) {
 		if (err) return callback(err);
 
+		// initialise the basePath to the cwd directory
+		opts.basePath = opts.basePath || path.dirname(targetFile);
+
+		// initialise the routerules
 		routerules(data.split(/\n\r?/), opts, callback);
 	});
 };
