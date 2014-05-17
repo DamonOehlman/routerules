@@ -61,13 +61,7 @@ var Ruleset = require('./lib/ruleset');
   provided which can load rules from a file in a format similar to what is shown
   below:
 
-  ```
-  # Send GET requests for /hello to handlers/test.js (hello export)
-  GET /hello => simple.hello
-
-  # Send GET requests for /hello2 to handlers/test.js (hello export)
-  /hello => simple.hello
-  ```
+  <<< test/simple.txt
 
   Additionally, the `routerules.load` function will set the `basePath` option
   for targeted modules to the directory of the filename that was specified in the

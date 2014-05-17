@@ -61,7 +61,7 @@ source for those rules.  To assist with this, a `routerules.load` helper is
 provided which can load rules from a file in a format similar to what is shown
 below:
 
-```
+```txt
 # Send GET requests for /hello to handlers/test.js (hello export)
 GET /hello => simple.hello
 
