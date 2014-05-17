@@ -9,16 +9,6 @@ var Ruleset = require('./lib/ruleset');
   allows a user to define a text file of routes and have those bound to
   particular modules and appropriate exports.
 
-  While the core of `routerules` designed to be framework agnostic, a suite of
-  framework helpers are provided which will help with wiring the detected routes
-  in platform appropriate ways.  Out of the box, the following route wirers
-  are included:
-
-  - express
-  - connect
-  - union
-  - tako
-
   ## Example Usage
 
   In it's simplest form here is what a plaintext route rule looks like:
