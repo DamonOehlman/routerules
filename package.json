@@ -22,7 +22,8 @@
     "url": "http://github.com/DamonOehlman/routerules/issues"
   },
   "scripts": {
-    "test": "mocha --reporter spec"
+    "test": "mocha --reporter spec",
+    "gendocs": "gendocs > README.md"
   },
   "homepage": "https://github.com/DamonOehlman/routerules",
   "directories": {
