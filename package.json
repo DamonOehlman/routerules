@@ -9,7 +9,7 @@
   "version": "0.1.2",
   "main": "index.js",
   "dependencies": {
-    "debug": "~0.8"
+    "debug": "~3.1.0"
   },
   "devDependencies": {
     "mocha": "^1"
